@@ -1,0 +1,5 @@
+## Methods
+
+The data is collected from a survey conducted in Tech firms all over the world collecting information about the demographic data and the type of work environment they are working in. This data can be used to classify if a person requires treatment or not. This dataset(Mental Health in Tech Survey) was chosen from Open ML - https://www.openml.org/search?type=data&status=active&id=43674&sort=runs
+
+We performed exploratory data analysis on the data. After exploring the data we removed the irrelevant columns such as timestamp and comments. For the categorical columns we replaced the missing values with mode and for numerical columns we replaceed the missing values with median. After preprocessing the data we split the 70 percent of the data as training set and 30 percent of the data as test set. After splitting the data we are modelling the data using different classification algorithms such as Logistic Regression, Naïve Bayes, K-Nearest Neighbors, Support Vector Machines, Decision Trees, Random Forest and choose the model that performs the best among others. 

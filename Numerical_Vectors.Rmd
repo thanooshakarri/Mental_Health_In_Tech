@@ -1,0 +1,186 @@
+
+```{python}
+import pandas as pds
+import numpy as np
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.naive_bayes import GaussianNB
+from scipy.sparse import hstack
+from sklearn.preprocessing import Normalizer
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.model_selection import GridSearchCV
+import math
+import matplotlib.pyplot as plt
+
+```
+
+```{python}
+data=pds.read_csv("Data/pre_preocessed.csv")
+#data.drop("Timestamp",axis=1,inplace=True)
+```
+```{python}
+#normalizing age column
+norm=Normalizer()
+norm.fit(data.Age.values.reshape(-1,1))
+Age=norm.transform(data.Age.values.reshape(-1,1))
+```
+#One hot encoding Categorical features
+
+```{python}
+#Gender feature
+one_hot=OneHotEncoder()
+Gender=one_hot.fit_transform(np.array(data.Gender).reshape(-1,1))
+```
+
+
+```{python}
+#Country feature
+one_hot=OneHotEncoder()
+Country=one_hot.fit_transform(np.array(data.Country).reshape(-1,1))
+```
+
+```{python}
+#self_employed
+one_hot=OneHotEncoder()
+self_employed=one_hot.fit_transform(np.array(data.self_employed).reshape(-1,1))
+```
+
+```{python}
+#family_history
+one_hot=OneHotEncoder()
+family_history=one_hot.fit_transform(np.array(data.family_history).reshape(-1,1))
+```
+
+```{python}
+#treatment
+one_hot=OneHotEncoder()
+treatment=one_hot.fit_transform(np.array(data.treatment).reshape(-1,1))
+```
+
+```{python}
+#work_interfere
+one_hot=OneHotEncoder()
+work_interfere=one_hot.fit_transform(np.array(data.work_interfere).reshape(-1,1))
+```
+
+```{python}
+#no_employees
+one_hot=OneHotEncoder()
+no_employees=one_hot.fit_transform(np.array(data.no_employees).reshape(-1,1))
+```
+
+```{python}
+#remote_work
+one_hot=OneHotEncoder()
+remote_work=one_hot.fit_transform(np.array(data.remote_work).reshape(-1,1))
+```
+
+```{python}
+#tech_company
+one_hot=OneHotEncoder()
+tech_company=one_hot.fit_transform(np.array(data.tech_company).reshape(-1,1))
+```
+
+```{python}
+#benefits
+one_hot=OneHotEncoder()
+benefits=one_hot.fit_transform(np.array(data.benefits).reshape(-1,1))
+```
+
+```{python}
+#care_options
+one_hot=OneHotEncoder()
+care_options=one_hot.fit_transform(np.array(data.care_options).reshape(-1,1))
+```
+
+```{python}
+#wellness_program
+one_hot=OneHotEncoder()
+wellness_program=one_hot.fit_transform(np.array(data.wellness_program).reshape(-1,1))
+```
+
+```{python}
+#seek_help
+one_hot=OneHotEncoder()
+seek_help=one_hot.fit_transform(np.array(data.seek_help).reshape(-1,1))
+```
+
+```{python}
+#anonymity
+one_hot=OneHotEncoder()
+anonymity=one_hot.fit_transform(np.array(data.anonymity).reshape(-1,1))
+```
+
+```{python}
+#leave
+one_hot=OneHotEncoder()
+leave=one_hot.fit_transform(np.array(data.leave).reshape(-1,1))
+```
+
+```{python}
+#mental_health_consequence
+one_hot=OneHotEncoder()
+mental_health_consequence=one_hot.fit_transform(np.array(data.mental_health_consequence).reshape(-1,1))
+```
+
+```{python}
+#phys_health_consequence
+one_hot=OneHotEncoder()
+phys_health_consequence=one_hot.fit_transform(np.array(data.phys_health_consequence).reshape(-1,1))
+```
+
+```{python}
+#coworkers
+one_hot=OneHotEncoder()
+coworkers=one_hot.fit_transform(np.array(data.coworkers).reshape(-1,1))
+```
+
+```{python}
+#supervisor
+one_hot=OneHotEncoder()
+supervisor=one_hot.fit_transform(np.array(data.supervisor).reshape(-1,1))
+```
+
+```{python}
+#mental_health_interview
+one_hot=OneHotEncoder()
+mental_health_interview=one_hot.fit_transform(np.array(data.mental_health_interview).reshape(-1,1))
+```
+
+```{python}
+#phys_health_interview
+one_hot=OneHotEncoder()
+phys_health_interview=one_hot.fit_transform(np.array(data.phys_health_interview).reshape(-1,1))
+```
+
+```{python}
+#mental_vs_physical
+one_hot=OneHotEncoder()
+mental_vs_physical=one_hot.fit_transform(np.array(data.mental_vs_physical).reshape(-1,1))
+```
+
+
+```{python}
+#obs_consequence
+one_hot=OneHotEncoder()
+obs_consequence=one_hot.fit_transform(np.array(data.obs_consequence).reshape(-1,1))
+```
+
+```{python}
+numerical_vectors=pds.DataFrame(hstack(( Age, Gender, Country, self_employed,
+       family_history, work_interfere, no_employees,
+       remote_work, tech_company, benefits, care_options,
+       wellness_program, seek_help, anonymity, leave,
+       mental_health_consequence, phys_health_consequence, coworkers,
+       supervisor, mental_health_interview, phys_health_interview,
+       mental_vs_physical, obs_consequence)).toarray())
+       
+(numerical_vectors)
+```
+
+```{python}
+numerical_vectors.to_csv("Data/Numerical_vectors.csv")
+```
+
+
+

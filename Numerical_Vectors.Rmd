@@ -5,7 +5,7 @@ import numpy as np
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.naive_bayes import GaussianNB
 from scipy.sparse import hstack
-from sklearn.preprocessing import Normalizer
+from sklearn.preprocessing import normalize
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import GridSearchCV
@@ -17,12 +17,19 @@ import matplotlib.pyplot as plt
 ```{python}
 data=pds.read_csv("Data/pre_preocessed.csv")
 #data.drop("Timestamp",axis=1,inplace=True)
+y = data['treatment'].values
+X = data.drop(['treatment'],axis = 1)
+X.head()
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.33, stratify = y)
+X_train, X_cv, y_train, y_cv = train_test_split(X_train, y_train, test_size = 0.33, stratify = y_train )
 ```
+
+
 ```{python}
+
 #normalizing age column
-norm=Normalizer()
-norm.fit(data.Age.values.reshape(-1,1))
-Age=norm.transform(data.Age.values.reshape(-1,1))
+Age=normalize([np.array(list(data.Age))])
+Age
 ```
 #One hot encoding Categorical features
 
@@ -165,22 +172,29 @@ mental_vs_physical=one_hot.fit_transform(np.array(data.mental_vs_physical).resha
 one_hot=OneHotEncoder()
 obs_consequence=one_hot.fit_transform(np.array(data.obs_consequence).reshape(-1,1))
 ```
+```{python}
+
+data[data["treatment"]=="Yes"]=1
+data[data["treatment"]=="No"]=0
+
+treatment_nd=data.treatment.to_numpy().reshape(-1,1).astype("int")
+```
 
 ```{python}
-numerical_vectors=pds.DataFrame(hstack(( Age, Gender, Country, self_employed,
+numerical_vectors=pds.DataFrame(hstack((Gender, Country, self_employed,
        family_history, work_interfere, no_employees,
        remote_work, tech_company, benefits, care_options,
        wellness_program, seek_help, anonymity, leave,
        mental_health_consequence, phys_health_consequence, coworkers,
        supervisor, mental_health_interview, phys_health_interview,
-       mental_vs_physical, obs_consequence)).toarray())
-       
-(numerical_vectors)
+       mental_vs_physical, obs_consequence,Age.reshape(-1,1),treatment_nd)).toarray())
+numerical_vectors
 ```
 
 ```{python}
 numerical_vectors.to_csv("Data/Numerical_vectors.csv")
 ```
+
 
 
 

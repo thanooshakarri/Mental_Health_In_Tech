@@ -70,6 +70,7 @@ data.Gender=data.Gender.replace(["female", "cis female", "femake", "female (cis)
 data.Gender=data.Gender.replace(["female (trans)", "enby", "androgyne","trans-female","genderqueer","queer","non-binary","queer/she/they","trans woman","neuter"],"non-binary")
 data.Gender=data.Gender.replace(["agender","fluid","all","nah","p","a little about you","something kinda male?",
                                  "ostensibly male, unsure what that really means"],"other")
+data.Gender=[ i.strip() for i in np.array(data.Gender)]                           
 data.Gender.value_counts()
 ```
 

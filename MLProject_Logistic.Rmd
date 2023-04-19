@@ -1,0 +1,105 @@
+---
+title: "MLProject"
+output: pdf_document
+date: "2023-04-03"
+---
+
+```{r}
+data<-read.csv("D:/MLproject/survey.csv")
+data
+```
+
+``` {r}
+library(dplyr)
+```
+
+
+``` {r}
+#install.packages("reticulate")
+library(reticulate)
+```
+
+``` {r}
+#reticulate::py_config()
+```
+
+``` {r}
+#Sys.which("python")
+#use_python("C:\\Users\\User\\AppData\\Local\\r-miniconda\\envs\\r-reticulate\\python.exe")
+```
+
+
+``` {r}
+main <- import_main()
+builtins <- import_builtins()
+#np <- import("numpy")
+#py_install("pandas")
+```
+
+
+
+```{python}
+import pandas as pd
+import numpy as np
+#from datetime import datetime
+#data1=pd.read_csv("C:/Users/User/OneDrive/Documents/final-project-mental-health/Data/Numerical_vectors.csv")
+#data1=data1.drop("Unnamed: 0",axis=1)
+data2=pd.read_csv("C:/Users/User/OneDrive/Documents/final-project-mental-health/Data/Label_encoded.csv")
+data2=data2.drop("Unnamed: 0",axis=1)
+data2
+```
+
+``` {r}
+#py_install("scikit-learn")
+```
+
+``` {python}
+from sklearn import linear_model
+from sklearn.model_selection import train_test_split
+#training_data, testing_data=train_test_split(data1, test_size=0.3, random_state=21)
+training_data, testing_data=train_test_split(data2, test_size=0.3, random_state=21)
+X_train=training_data.drop("treatment_nd",axis=1)
+Y_train=training_data["treatment_nd"]
+X_test=testing_data.drop("treatment_nd",axis=1)
+Y_test=testing_data["treatment_nd"]
+logistic_model=linear_model.LogisticRegression(solver="saga",random_state=2,C=0.1,penalty="l1")
+logistic_model.fit(X_train,Y_train)
+```
+
+``` {python}
+from sklearn.metrics import classification_report, confusion_matrix
+y_pred=logistic_model.predict(X_test)
+score_=logistic_model.score(X_test,Y_test)
+confusion_m=confusion_matrix(Y_test,y_pred)
+report=classification_report(Y_test,y_pred)
+```
+
+``` {python}
+print(f"Score is {score_}")
+print(f"Confusion Matrix is \n {confusion_m}")
+print(report)
+```
+
+
+``` {python}
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import accuracy_score, make_scorer
+#X=pd.read_csv("C:/Users/User/OneDrive/Documents/final-project-mental-health/Data/Numerical_vectors.csv")
+X=pd.read_csv("C:/Users/User/OneDrive/Documents/final-project-mental-health/Data/Label_encoded.csv")
+X1=X.drop("Unnamed: 0",axis=1)
+X=X1.drop("treatment_nd",axis=1)
+Y=X1["treatment_nd"]
+
+logr=linear_model.LogisticRegression()
+params = {'penalty': ['l1', 'l2'],
+          'C': [0.01, 0.1, 1, 10, 100],
+          'solver': ['liblinear', 'saga']}
+scorer = make_scorer(accuracy_score)
+grid_search = GridSearchCV(logr, param_grid=params, scoring=scorer, cv=5)
+grid_search.fit(X, Y)
+```
+
+``` {python}
+print('Best parameters: ', grid_search.best_params_)
+print('Best score: ', grid_search.best_score_)
+```

@@ -1,0 +1,82 @@
+---
+title: "MLProject_Decision_Trees"
+output: pdf_document
+date: "2023-04-19"
+---
+
+```{r}
+data<-read.csv("D:/MLproject/survey.csv")
+data
+```
+
+
+``` {r}
+#install.packages("reticulate")
+library(reticulate)
+```
+
+```{python}
+import pandas as pd
+import numpy as np
+#from datetime import datetime
+#data1 = pd.read_csv("C:/Users/User/OneDrive/Documents/final-project-mental-health/Data/Numerical_vectors.csv")
+#data1=data1.drop("Unnamed: 0",axis=1)
+data2=pd.read_csv("C:/Users/User/OneDrive/Documents/final-project-mental-health/Data/Label_encoded.csv")
+data2=data2.drop("Unnamed: 0",axis=1)
+data2
+```
+
+
+``` {python}
+from sklearn import linear_model
+from sklearn.model_selection import train_test_split
+training_data, testing_data = train_test_split(data2, test_size=0.3, random_state=21)
+X_train=training_data.drop("treatment_nd",axis=1)
+Y_train=training_data["treatment_nd"]
+X_test=testing_data.drop("treatment_nd",axis=1)
+Y_test=testing_data["treatment_nd"]
+```
+
+``` {python}
+from sklearn import tree
+clf = tree.DecisionTreeClassifier(criterion='gini',max_depth=4,splitter='best',min_samples_leaf=2,min_samples_split=4)
+clf = clf.fit(X_train, Y_train)
+```
+
+``` {python}
+from sklearn.metrics import classification_report, confusion_matrix
+y_pred=clf.predict(X_test)
+score_=clf.score(X_test,Y_test)
+confusion_m=confusion_matrix(Y_test,y_pred)
+report=classification_report(Y_test,y_pred)
+```
+
+
+``` {python}
+print(f"Score is {score_}")
+print(f"Confusion Matrix is \n {confusion_m}")
+print(report)
+```
+
+
+``` {python}
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import accuracy_score, make_scorer
+X=data2.drop("treatment_nd",axis=1)
+Y=data2["treatment_nd"]
+clf1 = tree.DecisionTreeClassifier()
+params = {'max_depth': np.arange(1, 21),
+          'criterion': ['gini', 'entropy'],
+          'splitter': ['best', 'random'],
+          'min_samples_split': np.arange(2, 10),
+          'min_samples_leaf': np.arange(1, 5)}
+scorer = make_scorer(accuracy_score)
+grid_search = GridSearchCV(clf1, param_grid=params, scoring=scorer, cv=5)
+grid_search.fit(X, Y)
+```
+
+
+``` {python}
+print('Best parameters: ', grid_search.best_params_)
+print('Best score: ', grid_search.best_score_)
+```

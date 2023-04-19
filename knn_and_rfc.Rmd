@@ -1,0 +1,99 @@
+
+
+```{r}
+#install.packages('reticulate')
+library(reticulate)
+```
+
+```{python}
+import sklearn
+import pandas as pd
+# Import necessary modules
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import RandomizedSearchCV
+from sklearn import metrics
+from sklearn.metrics import accuracy_score, mean_squared_error, precision_recall_curve
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics  import classification_report
+import matplotlib.pyplot as plt
+```
+
+
+
+```{python}
+data = pd.read_csv("C:/Users/HP/Documents/final-project-mental-health/Data/Label_encoded.csv")
+data
+```
+
+
+
+```{python}
+#y contains target variable
+y = data['treatment_nd']
+y
+#x contains all the feature variables
+x= data.iloc[:, 0:24]
+x
+```
+
+```{python}
+#Splitting the dataset into train and test datasets
+x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.3,random_state=0)
+```
+
+```{python}
+#Performing hyperparameter tuning using grid search
+
+param_grid = dict(n_neighbors = list(range(1,32)), weights=['uniform','distance'])
+
+
+grid = GridSearchCV(KNeighborsClassifier(), param_grid,cv=5,scoring='accuracy')
+grid.fit(x,y)
+
+
+print(grid.best_params_)
+print(grid.best_estimator_)
+```
+
+```{python}
+#range of k values vs accuracy
+k_range=range(1,31)
+scores=[]
+
+
+for k in k_range:
+    knn=KNeighborsClassifier(n_neighbors=k)
+    knn.fit(x_train, y_train)
+    y_pred=knn.predict(x_test)
+    scores.append(accuracy_score(y_test, y_pred))
+
+plt.plot(k_range, scores)
+plt.xlabel('k value')
+plt.ylabel('Accuracy')
+
+plt.show()
+```
+
+
+```{python}
+#From the graph we got k=6
+#Performing knn with k=6
+knn=KNeighborsClassifier(n_neighbors=6,weights='uniform',p=1,n_jobs=-1)
+knn.fit(x_train,y_train)
+print(classification_report(y_test,knn.predict(x_test)))
+```
+
+
+```{python}
+#Performing random forest classifier
+rf = RandomForestClassifier()
+rf.fit(x_train,y_train)
+y_pred = rf.predict(x_test)
+print("Accuracy:",metrics.accuracy_score(y_test,y_pred))
+print('Precision:', metrics.precision_score(y_test, y_pred))
+```
+
+
+

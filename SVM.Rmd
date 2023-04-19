@@ -1,0 +1,148 @@
+```{python}
+import pandas as pds
+import numpy as np
+from sklearn.naive_bayes import BernoulliNB
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.model_selection import GridSearchCV
+import math
+import matplotlib.pyplot as plt
+from sklearn import metrics
+from sklearn import svm
+```
+
+```{python}
+pre_data=pds.read_csv("Data/Label_encoded.csv")
+data=pds.read_csv("Data/Numerical_vectors.csv")
+pre_data.columns
+```
+
+
+
+```{python}
+data.drop("Unnamed: 0",inplace=True,axis=1)
+pre_data.drop("Unnamed: 0",inplace=True,axis=1)
+y = pre_data["treatment_nd"]
+x = pre_data.drop(['treatment_nd'],axis = 1)
+Y = data["115"]
+X = data.drop(['115'],axis = 1)
+X.columns
+```
+
+```{python}
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size = 0.33, stratify = y)
+X_train, X_cv, y_train, y_cv = train_test_split(X_train, y_train, test_size = 0.33, stratify = y_train )
+```
+#LABEL ENCODIN
+
+```{python}
+
+nb = BernoulliNB(class_prior=[0.5,0.5])
+
+parameters = {'alpha' :[0.00001,0.0005, 0.0001,0.005,0.001,0.05,0.01,0.1,0.5,1,5,10,50,100,500,1000]}
+
+clf = GridSearchCV(nb,parameters,cv = 5, scoring='f1',return_train_score=True, verbose=2)
+
+clf.fit(X_train,y_train)
+
+
+
+```
+
+```{python}
+print("best hyper parameters are:",clf.best_params_)
+
+nb_bow = BernoulliNB(alpha = 10, class_prior=[0.5,0.5])
+nb_bow.fit(X_train, y_train)
+
+print(metrics.classification_report(y_test,nb_bow.predict(X_test)))
+metrics.accuracy_score(y_test,nb_bow.predict(X_test))
+metrics.confusion_matrix(y_test,nb_bow.predict(X_test))
+```
+
+```{python}
+
+
+# Create an SVM classifier with a linear kernel
+clf = svm.SVC()
+
+param={"kernel":['linear', 'poly', 'rbf', 'sigmoid'], "C":[0.01,0.1,1,10,100]}
+grid_cv=GridSearchCV(clf,param,cv = 5, scoring='f1',return_train_score=True, verbose=2)
+# Train the classifier on the training data
+grid_cv.fit(X_train, y_train)
+print("best hyper parameters are:",grid_cv.best_params_)
+```
+
+```{python}
+# Predict the labels of the test set
+clf=svm.SVC(C= 100, kernel='linear')
+clf.fit(X_train,y_train)
+
+# Calculate the accuracy of the classifier
+accuracy = metrics.accuracy_score(y_test, clf.predict(X_test))
+print("Accuracy:", accuracy)
+print(metrics.confusion_matrix(y_test,clf.predict(X_test)))
+
+
+```
+
+#One Hot Encoding
+
+```{python}
+X_train, X_test, y_train, y_test = train_test_split(X,Y, test_size = 0.33, stratify = y)
+X_train, X_cv, y_train, y_cv = train_test_split(X_train, y_train, test_size = 0.33, stratify = y_train )
+```
+
+```{python}
+
+nb = BernoulliNB(class_prior=[0.5,0.5])
+
+parameters = {'alpha' :[0.00001,0.0005, 0.0001,0.005,0.001,0.05,0.01,0.1,0.5,1,5,10,50,100,500,1000]}
+
+clf = GridSearchCV(nb,parameters,cv = 5, scoring='f1',return_train_score=True, verbose=2)
+
+clf.fit(X_train,y_train)
+
+
+
+```
+
+```{python}
+print("best hyper parameters are:",clf.best_params_)
+
+nb_bow = BernoulliNB(alpha = 0.1, class_prior=[0.5,0.5])
+nb_bow.fit(X_train, y_train)
+
+print(metrics.classification_report(y_test,nb_bow.predict(X_test)))
+metrics.accuracy_score(y_test,nb_bow.predict(X_test))
+metrics.confusion_matrix(y_test,nb_bow.predict(X_test))
+```
+
+```{python}
+
+
+# Create an SVM classifier with a linear kernel
+clf = svm.SVC()
+
+param={"kernel":['linear', 'poly', 'rbf', 'sigmoid'], "C":[0.01,0.1,1,10,100]}
+grid_cv=GridSearchCV(clf,param,cv = 5, scoring='f1',return_train_score=True, verbose=2)
+# Train the classifier on the training data
+grid_cv.fit(X_train, y_train)
+print("best hyper parameters are:",grid_cv.best_params_)
+```
+
+```{python}
+# Predict the labels of the test set
+clf=svm.SVC(C= 0.1, kernel='rbf')
+clf.fit(X_train,y_train)
+
+# Calculate the accuracy of the classifier
+accuracy = metrics.accuracy_score(y_test, clf.predict(X_test))
+print("Accuracy:", accuracy)
+print(metrics.confusion_matrix(y_test,clf.predict(X_test)))
+
+
+```
+
+
+

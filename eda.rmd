@@ -1,0 +1,88 @@
+```{python}
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+```
+
+```{python}
+import pandas as pd
+df = pd.read_csv("C:/Users/HP/Documents/final-project-mental-health/Data/survey.csv")
+df.head()
+
+```
+
+
+```{python}
+#Checking the data types
+df.dtypes
+```
+
+```{python}
+df.shape
+````
+
+```{python}
+#Summary of data. As, there is just 1 numerical variable we get summary of just one column.
+df.describe()
+```
+
+
+```{python}
+#CHecking the null values in the dataset
+df.isna().sum()
+
+```
+
+```{python}
+#Checking the duplicated values
+df.duplicated().sum()
+#there are no duplicate values in this dataset
+```
+
+
+
+
+```{python}
+df = pd.read_csv("C:/Users/HP/Documents/final-project-mental-health/Data/pre_preocessed.csv")
+df.head()
+```
+
+```{python}
+#boxplot for age
+ax = sns.boxplot(df["Age"])
+ax.set(ylim=(0,100))
+plt.show()
+```
+
+
+```{python}
+#Plots for all categorical columns
+categorical_cols = df.select_dtypes(include=['object']).columns.tolist()
+
+for col in categorical_cols:
+    plt.figure(figsize=(3,5))
+    sns.countplot(x=col, data=df)
+    plt.title(col)
+    plt.xticks(rotation=90)
+    plt.show()
+
+```
+
+
+
+
+
+
+
+
+
+```{python}
+
+```
+
+```{python}
+```
+
+```{python}
+
+```

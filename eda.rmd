@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 df = pd.read_csv("C:/Users/HP/Documents/final-project-mental-health/Data/survey.csv")
 df.head()
-
 ```
 
 
@@ -28,9 +27,8 @@ df.describe()
 
 
 ```{python}
-#CHecking the null values in the dataset
+#Checking the null values in the dataset
 df.isna().sum()
-
 ```
 
 ```{python}
@@ -65,24 +63,9 @@ for col in categorical_cols:
     plt.title(col)
     plt.xticks(rotation=90)
     plt.show()
-
 ```
 
 
 
 
 
-
-
-
-
-```{python}
-
-```
-
-```{python}
-```
-
-```{python}
-
-```

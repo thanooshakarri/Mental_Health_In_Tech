@@ -1,0 +1,202 @@
+```{python}
+import pandas as pds
+import numpy as np
+from sklearn.preprocessing import LabelEncoder
+from sklearn.naive_bayes import GaussianNB
+from scipy.sparse import hstack
+from sklearn.preprocessing import normalize
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.model_selection import GridSearchCV
+import math
+import matplotlib.pyplot as plt
+```
+
+```{python}
+data=pds.read_csv("Data/pre_preocessed.csv")
+#data.drop("Timestamp",axis=1,inplace=True)
+```
+
+```{python}
+#normalizing age column
+Age=normalize([data.Age])
+Age
+```
+#One hot encoding Categorical features
+
+```{python}
+#Gender feature
+le=LabelEncoder()
+Gender=le.fit_transform(data.Gender)
+Gender
+```
+
+
+```{python}
+#Country feature
+le=LabelEncoder()
+Country=le.fit_transform(data.Country)
+```
+
+```{python}
+#self_employed
+le=LabelEncoder()
+self_employed=le.fit_transform(data.self_employed)
+```
+
+```{python}
+#family_history
+le=LabelEncoder()
+family_history=le.fit_transform(data.family_history)
+```
+
+```{python}
+#treatment
+le=LabelEncoder()
+treatment=le.fit_transform(data.treatment)
+```
+
+```{python}
+#work_interfere
+le=LabelEncoder()
+work_interfere=le.fit_transform(data.work_interfere)
+```
+
+```{python}
+#no_employees
+le=LabelEncoder()
+no_employees=le.fit_transform(data.no_employees)
+```
+
+```{python}
+#remote_work
+le=LabelEncoder()
+remote_work=le.fit_transform(data.remote_work)
+```
+
+```{python}
+#tech_company
+le=LabelEncoder()
+tech_company=le.fit_transform(data.tech_company)
+```
+
+```{python}
+#benefits
+le=LabelEncoder()
+benefits=le.fit_transform(data.benefits)
+```
+
+```{python}
+#care_options
+le=LabelEncoder()
+care_options=le.fit_transform(data.care_options)
+```
+
+```{python}
+#wellness_program
+le=LabelEncoder()
+wellness_program=le.fit_transform(data.wellness_program)
+```
+
+```{python}
+#seek_help
+le=LabelEncoder()
+seek_help=le.fit_transform(data.seek_help)
+```
+
+```{python}
+#anonymity
+le=LabelEncoder()
+anonymity=le.fit_transform(data.anonymity)
+```
+
+```{python}
+#leave
+le=LabelEncoder()
+leave=le.fit_transform(data.leave)
+```
+
+```{python}
+#mental_health_consequence
+le=LabelEncoder()
+mental_health_consequence=le.fit_transform(data.mental_health_consequence)
+```
+
+```{python}
+#phys_health_consequence
+le=LabelEncoder()
+phys_health_consequence=le.fit_transform(data.phys_health_consequence)
+```
+
+```{python}
+#coworkers
+le=LabelEncoder()
+coworkers=le.fit_transform(data.coworkers)
+```
+
+```{python}
+#supervisor
+le=LabelEncoder()
+supervisor=le.fit_transform(data.supervisor)
+```
+
+```{python}
+#mental_health_interview
+le=LabelEncoder()
+mental_health_interview=le.fit_transform(data.mental_health_interview)
+```
+
+```{python}
+#phys_health_interview
+le=LabelEncoder()
+phys_health_interview=le.fit_transform(data.phys_health_interview)
+```
+
+```{python}
+#mental_vs_physical
+le=LabelEncoder()
+mental_vs_physical=le.fit_transform(data.mental_vs_physical)
+```
+
+
+```{python}
+#obs_consequence
+le=LabelEncoder()
+obs_consequence=le.fit_transform(data.obs_consequence)
+```
+
+```{python}
+data[data["treatment"]=="Yes"]=1
+data[data["treatment"]=="No"]=0
+
+```
+
+```{python}
+numerical_vectors=pds.DataFrame({'Gender':Gender,
+'Country':Country,
+"self_employed":self_employed,
+"family_history":family_history,
+"work_interfere":work_interfere,
+"no_employees":no_employees,
+"remote_work":remote_work,
+"tech_company":tech_company,
+"benefit":benefits,
+"care_options":care_options,
+"wellness_program":wellness_program,
+"seek_help":seek_help,
+"anonymity":anonymity,
+"leave":leave,
+"mental_health_consequence":mental_health_consequence, "phys_health_consequence":phys_health_consequence,
+"coworkers":coworkers,
+"supervisor":supervisor, "mental_health_interview":mental_health_interview, "phys_health_interview":phys_health_interview,
+"mental_vs_physical":mental_vs_physical, "obs_consequence":obs_consequence,
+"Age": Age[0] ,
+"treatment_nd":list(data.treatment)})
+       
+(numerical_vectors)
+```
+
+```{python}
+numerical_vectors.to_csv("Data/Label_encoded.csv")
+```
+

@@ -22,7 +22,7 @@ The tech industry is a rapidly growing industry with a high prevalence of mental
 ├── LICENSE
 ├── README.md                           <- Introduction of repository
 ├── docs                                <- Presentations, Reports(QMD)
-├── final report                        <- Final report created using R markdown
+├── final report                        <- Final report
 ├── proposal                            <- Project Proposal
 ├── requirements.txt                    <- Python packages requirement file
 ├── Data                                <-Dataset

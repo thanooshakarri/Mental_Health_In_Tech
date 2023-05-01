@@ -18,9 +18,7 @@ library(reticulate)
 ```{python}
 import pandas as pd
 import numpy as np
-#from datetime import datetime
-#data1 = pd.read_csv("C:/Users/User/OneDrive/Documents/final-project-mental-health/Data/Numerical_vectors.csv")
-#data1=data1.drop("Unnamed: 0",axis=1)
+#Reading and loading the dataset
 data2=pd.read_csv("C:/Users/User/OneDrive/Documents/final-project-mental-health/Data/Label_encoded.csv")
 data2=data2.drop("Unnamed: 0",axis=1)
 data2
@@ -30,7 +28,9 @@ data2
 ``` {python}
 from sklearn import linear_model
 from sklearn.model_selection import train_test_split
+#Importing the required packages.
 training_data, testing_data = train_test_split(data2, test_size=0.3, random_state=21)
+#Splitting the dataset into training and testing sets in the ratio 70:30.
 X_train=training_data.drop("treatment_nd",axis=1)
 Y_train=training_data["treatment_nd"]
 X_test=testing_data.drop("treatment_nd",axis=1)
@@ -41,6 +41,18 @@ Y_test=testing_data["treatment_nd"]
 from sklearn import tree
 clf = tree.DecisionTreeClassifier(criterion='gini',max_depth=4,splitter='best',min_samples_leaf=2,min_samples_split=4)
 clf = clf.fit(X_train, Y_train)
+#Defining and fitting the decision tree with the below obtained hyperparameters from grid search.
+fig=plt.figure(figsize=(25,20))
+_=tree.plot_tree(clf,feature_names=X_train.columns,  
+                   class_names=["No","Yes"],
+                   filled=True)
+plt.savefig("decision_tree.png",dpi=300,bbox_inches='tight')
+#To generate the decision tree and save the image.
+```
+
+``` {r}
+knitr::include_graphics("decision_tree.png")
+#To see the decision tree obtained above.
 ```
 
 ``` {python}
@@ -49,6 +61,7 @@ y_pred=clf.predict(X_test)
 score_=clf.score(X_test,Y_test)
 confusion_m=confusion_matrix(Y_test,y_pred)
 report=classification_report(Y_test,y_pred)
+#Calculating the different performance parameters
 ```
 
 
@@ -56,6 +69,7 @@ report=classification_report(Y_test,y_pred)
 print(f"Score is {score_}")
 print(f"Confusion Matrix is \n {confusion_m}")
 print(report)
+#Printing the obtained performance results.
 ```
 
 
@@ -73,10 +87,12 @@ params = {'max_depth': np.arange(1, 21),
 scorer = make_scorer(accuracy_score)
 grid_search = GridSearchCV(clf1, param_grid=params, scoring=scorer, cv=5)
 grid_search.fit(X, Y)
+#Grid Search CV is used here for hyperparameter tuning.
 ```
 
 
 ``` {python}
 print('Best parameters: ', grid_search.best_params_)
 print('Best score: ', grid_search.best_score_)
+#To print the best parameters.
 ```

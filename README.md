@@ -15,7 +15,7 @@ Welcome to your final project repo. Please make sure to follow the instructions 
 This project is based on the mental health data of people who are working in the industry. This project uses the machine learning model to predict if the person needs treatment for their mental health or not.
 
 ## Why the project is useful?
-In conclusion, the tech industry is a rapidly growing industry with a high prevalence of mental health problems, such as stress and burnout, which can have negative impacts on employee productivity and wellbeing. This study aimed to gain insight into the mental health status of individuals working in the tech sector and to create a model that can accurately predict whether a person needs therapy.
+The tech industry is a rapidly growing industry with a high prevalence of mental health problems, such as stress and burnout, which can have negative impacts on employee productivity and wellbeing. This study aimed to gain insight into the mental health status of individuals working in the tech sector and to create a model that can accurately predict whether a person needs therapy.
 
 ## How users can get started with the project
 ```
@@ -36,14 +36,12 @@ In conclusion, the tech industry is a rapidly growing industry with a high preva
 |   |____ SVM.Rmd                       <-SVM and Naive Bayes Algorithm
 |   |____ knn_and_rfc.Rmd               <-KNN and Random Forest Algorithm
 ├── processing                          <-This contains the data processing files
-|   |____ Label_Encoding.Rmd             <-One hot encoding
-|   |____ Numerical_Vector_rep.Rmd       <-Label Encoding
-|   |____ eda.rmd                        <-Exploratory Data Analysis
-|   |____ pre_preocessing.Rmd            <-Pre-Processig
+|   |____ Label_Encoding.Rmd            <-One hot encoding
+|   |____ Numerical_Vector_rep.Rmd      <-Label Encoding
+|   |____ eda.rmd                       <-Exploratory Data Analysis
+|   |____ pre_preocessing.Rmd           <-Pre-Processig
 
 ```
-
-## Where users can get help with your project
 
 
 ## Who maintains and contributes to the project

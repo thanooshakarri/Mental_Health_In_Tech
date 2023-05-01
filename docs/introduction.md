@@ -1,0 +1,7 @@
+Tech industry is a fast-paced industry and so, the people working in this industry go through an increased level of pressure in order to meet the growing demands of the digital age. Many other factors also impact the mental health of employees like extended work hours, gender pay gap, less employee benefits and so on. 
+
+Previous research has revealed that the IT sector has a high prevalence of mental health problems, with employees experiencing higher levels of stress and burnout than those in other sectors (Marshall et al., 2020). According to a study by Jain et al. (2020), the most important factors affecting employees in the tech industry's mental health were job stress, job discontent, and extended work hours.
+
+There is still not enough information in understanding the workload and work-life balance of these people, despite the fact that previous study has identified some aspects affecting the mental health of workers in the IT industry. Additionally, since respondents might not feel comfortable sharing their worries, the data's accuracy and credibility may be limited. 
+
+This study's goals are to get some insight on the mental health state of those working in the tech sector and to create a model that can correctly predict whether a person needs therapy. This study will be able to better understand and address mental health issues in the tech sector, improving employee productivity and general wellbeing.
